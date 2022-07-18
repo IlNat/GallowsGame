@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <ctime>
+#include <Windows.h>
 #pragma once
 
 using namespace std;
@@ -12,11 +13,13 @@ private:
 	string* words;
 	string pathToVocabularyFile = "vocabulary.txt";
 	ifstream vocabularyFile;
-	int sizeOfVocabulary = 100;
+	const int sizeOfVocabulary = 100;
 public:
 
 	Vocabulary();	
 
-	string returnRandomWord();	
+	string returnRandomWord();
+	
+	~Vocabulary();
 };
 

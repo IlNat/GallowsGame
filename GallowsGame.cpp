@@ -3,6 +3,8 @@
 #include <sstream>
 #include <Windows.h>
 #include "Victim.h"
+#include "Vocabulary.h"
+#include "KnownLetters.h"
 
 using namespace std;
 
@@ -112,11 +114,13 @@ double mathOperations(int& numberOfOperation, string& stringFirstNumber, string&
 void gameModeCalculator()
 {
     Victim victim;
+    KnownLetters knownLetters;
     string stringFirstNumber, stringSecondNumber, stringResultNumber;
     char signToFind;
     int amountOfAttempts = 0;
     int maxAmountOfAttempts = 6;
     int numberOfMathOperation;
+    bool flag;
 
     stringResultNumber = toString(mathOperations(numberOfMathOperation, stringFirstNumber, stringSecondNumber));
     int sizeOfResult = stringResultNumber.size();
@@ -147,8 +151,15 @@ void gameModeCalculator()
         cout << "Текущее количество попыток: " << amountOfAttempts << " из " << maxAmountOfAttempts << '\n';
         cout << "Ответ:\n";
         printCharArray(arrayToShow, sizeOfResult, ' ');
-        cout << "Введите символ для поиска: ";
-        cin >> signToFind;
+        do {
+            cout << "Введите символ для поиска: ";
+            cin >> signToFind;
+            signToFind = tolower((char)signToFind);
+            flag = knownLetters.checkChar(signToFind);
+            knownLetters.addChar(signToFind);
+            if (flag)
+                cout << "Символ уже был введён, повторите ввод.\n";
+        } while (flag);
         if (findSignInContentArray(signToFind, arrayToShow, arrayWithResult, sizeOfResult) == false) 
         {
             cout << "Символ не найден.\n";
@@ -172,14 +183,62 @@ void gameModeCalculator()
 
 void gameModeWords()
 {
+    Victim victim;
+    Vocabulary vocabulary;
+    KnownLetters knownLetters;
+    char signToFind;
+    int amountOfAttempts = 0;
+    int maxAmountOfAttempts = 6;
+    bool flag;
+
+    string result = vocabulary.returnRandomWord();
+    int sizeOfResult = result.size();
+
+    char* arrayWithResult = new char[sizeOfResult];
+    char* arrayToShow = new char[sizeOfResult];
+
+    fillEmptyArray(arrayToShow, sizeOfResult);
+
+    result.copy(arrayWithResult, sizeOfResult);
+
+    do
+    {
+        system("cls");
+        victim.printVictim();
+        cout << "Текущее количество попыток: " << amountOfAttempts << " из " << maxAmountOfAttempts << '\n';
+        cout << "Ответ:\n";
+        printCharArray(arrayToShow, sizeOfResult, ' ');
+        do {
+            cout << "Введите символ для поиска: ";
+            cin >> signToFind;
+            signToFind = tolower((char)signToFind);
+            flag = knownLetters.checkChar(signToFind);
+            knownLetters.addChar(signToFind);
+            if (flag)
+                cout << "Символ уже был введён, повторите ввод.\n";
+        } while (flag);
+        if (findSignInContentArray(signToFind, arrayToShow, arrayWithResult, sizeOfResult) == false)
+        {
+            cout << "Символ не найден.\n";
+            victim.increaseCurrentStage();
+        }
+        amountOfAttempts = victim.returnCurrentStage();
+    } while (amountOfAttempts != maxAmountOfAttempts && returnAmountOfSign(NOTHING, arrayToShow, sizeOfResult) != 0);
+    victim.printVictim();
+    if (amountOfAttempts == maxAmountOfAttempts)
+    {
+        cout << "Вы проиграли.\n";
+        cout << "Было загадано слово: ";
+        printCharArray(arrayWithResult, sizeOfResult, '\0');
+    }
+    else if (amountOfAttempts < maxAmountOfAttempts)
+    {
+        cout << "Вы отгадали слово: ";
+        printCharArray(arrayWithResult, sizeOfResult, '\0');
+    }
 
 }
-/*
-bool gameOver()
-{
 
-}
-*/
 int main()
 {
     SetConsoleCP(1251);
@@ -191,9 +250,9 @@ int main()
     {
         cout << "Выберите, в какой режим игры будете играть?\n1 - \"Слова\"; 2 - \"Калькулятор\.\n";
         cin >> choice;
-        if (choice != 1 && choice != 2)
+        if (choice != 1 && choice != 2 && choice != 3 && choice != 4)
             cout << "Неправильные введённые данные, повторите ввод.\n";
-    } while (choice != 1 && choice != 2);
+    } while (choice != 1 && choice != 2 && choice != 3 && choice != 4);
     switch (choice)
     {
     case 1:
