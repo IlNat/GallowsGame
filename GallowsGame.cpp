@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum {NOTHING = '_'};
+enum { NOTHING = '_' };
 
 template <typename T>
 string toString(T val)
@@ -23,7 +23,7 @@ bool findSignInContentArray(char sign, char* arrayToShow, char* arrayWithHiddenC
     bool isFind = false;
     for (int i = 0; i < sizeOfArray; i++)
     {
-        if (arrayWithHiddenContent[i] == sign) 
+        if (arrayWithHiddenContent[i] == sign)
         {
             arrayToShow[i] = sign;
             isFind = true;
@@ -42,7 +42,7 @@ void printCharArray(char* charArray, int sizeOfArray, char specSign)
 int returnAmountOfSign(char sign, char* array, int sizeOfArray)
 {
     int amountOfSign = 0;
-    for (int i = 0; i < sizeOfArray; i++) 
+    for (int i = 0; i < sizeOfArray; i++)
     {
         if (array[i] == sign)
             amountOfSign++;
@@ -124,7 +124,7 @@ void gameModeCalculator()
 
     stringResultNumber = toString(mathOperations(numberOfMathOperation, stringFirstNumber, stringSecondNumber));
     int sizeOfResult = stringResultNumber.size();
-    
+
     char* arrayWithResult = new char[sizeOfResult];
     char* arrayToShow = new char[sizeOfResult];
 
@@ -160,7 +160,7 @@ void gameModeCalculator()
             if (flag)
                 cout << "Символ уже был введён, повторите ввод.\n";
         } while (flag);
-        if (findSignInContentArray(signToFind, arrayToShow, arrayWithResult, sizeOfResult) == false) 
+        if (findSignInContentArray(signToFind, arrayToShow, arrayWithResult, sizeOfResult) == false)
         {
             cout << "Символ не найден.\n";
             victim.increaseCurrentStage();
@@ -174,7 +174,7 @@ void gameModeCalculator()
         cout << "Результат: ";
         printCharArray(arrayWithResult, sizeOfResult, '\0');
     }
-    else if (amountOfAttempts < maxAmountOfAttempts) 
+    else if (amountOfAttempts < maxAmountOfAttempts)
     {
         cout << "Вы отгадали результат: ";
         printCharArray(arrayWithResult, sizeOfResult, '\0');
@@ -248,42 +248,39 @@ int main()
     cout << "Добро пожаловать в игру \"Виселица\".\n";
     do
     {
-        cout << "Выберите, в какой режим игры будете играть?\n1 - \"Слова\"; 2 - \"Калькулятор\.\n";
+        cout << "Выберите команду:\n1 - режим игры \"Слова\";\n2 - режим игры \"Калькулятор\";\n3 - правила игры;\n4 - выйти из игры.\n";
         cin >> choice;
-        if (choice != 1 && choice != 2 && choice != 3 && choice != 4)
-            cout << "Неправильные введённые данные, повторите ввод.\n";
-    } while (choice != 1 && choice != 2 && choice != 3 && choice != 4);
-    switch (choice)
-    {
-    case 1:
-    {
-        cout << "Режим игры: \"Слова\".\n";
-        gameModeWords();
-        break;
-    }
-    case 2:
-    {
-        cout << "Режим игры: \"Калькулятор\".\n";
-        gameModeCalculator();
-        break;
-    }
-    case 3:
-    {
-        cout << "Правила игры:\n";
-        break;
-    }
-    case 4:
-    {
-        cout << "Выход из программы.\n";
-        break;
-    }
-    default:
-    {
-        cout << "Такой команды нет, повторите ввод.\n";
-        break;
-    }
-    }
     
-    //victim.printVictim();
+    
+        switch (choice)
+        {
+        case 1:
+        {
+            cout << "Режим игры: \"Слова\"\n";
+            gameModeWords();
+            break;
+        }
+        case 2:
+        {
+            cout << "Режим игры: \"Калькулятор\"\n";
+            gameModeCalculator();
+            break;
+        }
+        case 3:
+        {
+            cout << "Правила игры:\nРежим игры \"Слова\": \nКомпьютер загадывает слово из словаря и предлагает его оттгадать. Всего дано 6 попыток. \nЕсли Вы отгадали слово, а Жертва осталась недорисованной, то Вы победили. \nЕсли Жертва дорисована, а игрок не отгадал слово, то игрок проиграл.\n";
+            break;
+        }
+        case 4:
+        {
+            cout << "Выход из игры.\n";
+            break;
+        }
+        default:
+        {
+            cout << "Такой команды нет, повторите ввод.\n";
+            break;
+        }
+        } 
+    } while (choice != 4);
 }
-
