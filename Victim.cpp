@@ -1,6 +1,6 @@
 #include "Victim.h"
 
-
+// Метод печати "Жертвы".
 void Victim::printVictim()
 {
     if (currentStage > -1)
@@ -208,8 +208,9 @@ void Victim::printVictim()
     }
 }
 
+// Метод увеличения(на 1) текущего этапа. Увеличивает этап, пока тот меньше максимального этапа.
 void Victim::increaseCurrentStage()
 {
-    if (currentStage != maxStage)
+    if (currentStage < maxStage)
         currentStage++;
 }

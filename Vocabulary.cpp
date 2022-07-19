@@ -1,5 +1,6 @@
 #include "Vocabulary.h"
 
+// Конструктор класса. Открывает файл по пути и заполняет массив слов.
 Vocabulary::Vocabulary()
 {
 	
@@ -19,6 +20,7 @@ Vocabulary::Vocabulary()
 
 }
 
+// Метод, возвращающий случайное слово. 
 string Vocabulary::returnRandomWord()
 {
 	srand(time(0));
@@ -26,6 +28,7 @@ string Vocabulary::returnRandomWord()
 	return words[randomWord];
 }
 
+// Деструктор класса.
 Vocabulary::~Vocabulary()
 {
 	if (words != nullptr)

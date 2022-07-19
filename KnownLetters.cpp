@@ -1,5 +1,6 @@
 #include "KnownLetters.h"
 
+// Конструктор класса. Заполняет изначально массив известных букв пробелами(т.к. ничего ещё не известно).
 KnownLetters::KnownLetters()
 {
 	knownLetters = new char[sizeOfBuffer];
@@ -8,6 +9,7 @@ KnownLetters::KnownLetters()
 	isFull = false;
 }
 
+// Добавить элемент типа "char". Позволяет добавить элемент, пока указатель на конец меньше размера массива.
 void KnownLetters::addChar(char sign)
 {
 	if (pointer < sizeOfBuffer)
@@ -19,6 +21,7 @@ void KnownLetters::addChar(char sign)
 		cout << "Переполнение!!!\n";
 }
 
+// Проверить наличие элемента в массиве. Перебирает массив с известными символами и ищет(сравнивает их с искомым) элемент.
 bool KnownLetters::checkChar(char sign)
 {
 	bool isKnown = false;
@@ -30,6 +33,7 @@ bool KnownLetters::checkChar(char sign)
 	return isKnown;
 }
 
+// Деструктор класса.
 KnownLetters::~KnownLetters()
 {
 	if (knownLetters != nullptr)
